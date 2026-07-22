@@ -34,11 +34,17 @@ jobs:
     needs: ci
     runs-on: self-hosted
     steps:
-
+      - name: Install argocd 
+        shell: bash
+        run: |
+            curl -k -sSL -O argocd-linux-amd64 https://argocd-server.argocd/download/argocd-linux-amd64
+            chmod +x argocd
+            mv ./argocd /usr/local/bin/argocd
       - name: Argocd Sync
         shell: bash
         run: |
-            argocd login argocd-server.argocd \
+            #Insall Argocd
+            argocd login  -k argocd-server.argocd \
               --insecure \
               --grpc-web \
               --username admin \
