@@ -39,12 +39,12 @@ jobs:
         run: |
             curl -k -sSL -O argocd-linux-amd64 https://argocd-server.argocd/download/argocd-linux-amd64
             chmod +x argocd
-            mv ./argocd /usr/local/bin/argocd
+            sude mv ./argocd /usr/local/bin/argocd
       - name: Argocd Sync
         shell: bash
         run: |
             #Insall Argocd
-            argocd login  -k argocd-server.argocd \
+            argocd login  argocd-server.argocd \
               --insecure \
               --grpc-web \
               --username admin \
