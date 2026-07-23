@@ -30,10 +30,29 @@ jobs:
           push: true
           tags: shadab781/python-app:${{ env.COMMIT_ID }}
 
+    outputs:
+      commit_id: ${{ env.COMMIT_ID }}
+
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Modify values file
+        shell: bash
+        run: |
+          echo ${{needs.ci.outputs.commit_id}}
+          pip install yq
+          yq -Yi '.image.tag = "${{ needs.ci.outputs.commit_id }}"' ./charts/templates/values.yaml
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Update values.yaml tag to ${{ needs.ci.outputs.commit_id }}"
+
       - name: Ensure ArgoCD CLI is installed
         shell: bash
         run: |
