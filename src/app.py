@@ -12,7 +12,7 @@ def details():
 
 @app.route("/app/v1/healthz")
 def healthz():
-    return jsonify({"message": "Application is healthy."}),200
+    return jsonify({"message": "Application is healthy.."}),200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
